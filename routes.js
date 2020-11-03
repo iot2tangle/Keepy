@@ -11,9 +11,16 @@ const router = (app) => {
 
   app.get("/datasets", (request, response) => {
     const limit = request.query.limit;
+    const channelId = request.query.channelId;
+
+    const channelIdString = channelId
+      ? ` WHERE channelId = "${channelId}"`
+      : "";
 
     pool.query(
-      `SELECT * FROM datasets${limit ? ` LIMIT ${limit}` : ""}`,
+      `SELECT * FROM datasets${channelIdString} ORDER BY id DESC${
+        limit ? ` LIMIT ${limit}` : ""
+      }`,
       (error, result) => {
         if (error) {
           throw error;
