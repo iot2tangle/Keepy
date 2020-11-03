@@ -58,7 +58,7 @@ const router = (app) => {
       const channelId = await gatewayResponse.text();
 
       const data = {
-        dataset: JSON.stringify(...request.body),
+        dataset: JSON.stringify(request.body),
         channelId,
       };
 
