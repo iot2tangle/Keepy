@@ -9,7 +9,7 @@ const router = (app) => {
     });
   });
 
-  app.get("/datasets", (request, response) => {
+  app.get("/messages", (request, response) => {
     const limit = request.query.limit;
     const channelId = request.query.channelId;
 
@@ -18,7 +18,7 @@ const router = (app) => {
       : "";
 
     pool.query(
-      `SELECT * FROM datasets${channelIdString} ORDER BY id DESC${
+      `SELECT * FROM messages${channelIdString} ORDER BY id DESC${
         limit ? ` LIMIT ${limit}` : ""
       }`,
       (error, result) => {
@@ -31,9 +31,9 @@ const router = (app) => {
     );
   });
 
-  app.get("/datasets/last", (request, response) => {
+  app.get("/messages/last", (request, response) => {
     pool.query(
-      "SELECT * FROM datasets ORDER BY id DESC LIMIT 1;",
+      "SELECT * FROM messages ORDER BY id DESC LIMIT 1;",
       (error, result) => {
         if (error) {
           throw error;
@@ -44,34 +44,38 @@ const router = (app) => {
     );
   });
 
-  app.post("/datasets", async (request, response) => {
+  app.post("/messages", async (request, response) => {
     if (_.isEmpty(request.body)) {
       return response.status(500).send(`Bad request`).end();
     }
 
-    const gatewayResponse = await fetch(process.env.GATEWAY_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: {
-        api_key: `${process.env.GATEWAY_API_KEY}`,
-        ...request.body,
-      },
-    });
+    try {
+      const gatewayResponse = await fetch(process.env.GATEWAY_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: {
+          api_key: `${process.env.GATEWAY_API_KEY}`,
+          ...request.body,
+        },
+      });
 
-    const channelId = await gatewayResponse.text();
+      const channelId = await gatewayResponse.text();
 
-    const data = {
-      dataset: JSON.stringify(...request.body),
-      channelId,
-    };
+      const data = {
+        dataset: JSON.stringify(...request.body),
+        channelId,
+      };
 
-    pool.query("INSERT INTO datasets SET ?", data, (error, result) => {
-      if (error) {
-        console.log("error", error);
-      }
+      pool.query("INSERT INTO messages SET ?", data, (error, result) => {
+        if (error) {
+          console.log("error", error);
+        }
 
-      response.status(201).send(`User added with ID: ${result.insertId}`);
-    });
+        response.status(201).send(`User added with ID: ${result.insertId}`);
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
   });
 };
 
