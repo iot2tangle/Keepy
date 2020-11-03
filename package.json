@@ -1,0 +1,11 @@
+{
+  "name": "gateway-buffer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "lodash": "^4.17.20",
+    "mysql": "^2.18.1",
+    "node-fetch": "^2.6.1"
+  }
+}
