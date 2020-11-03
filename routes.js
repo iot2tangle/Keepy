@@ -16,11 +16,10 @@ const router = (app) => {
     const channelIdString = channelId
       ? ` WHERE channelId = "${channelId}"`
       : "";
+    const limitString = limit ? ` LIMIT ${limit}` : "";
 
     pool.query(
-      `SELECT * FROM messages${channelIdString} ORDER BY id DESC${
-        limit ? ` LIMIT ${limit}` : ""
-      }`,
+      `SELECT * FROM messages${channelIdString} ORDER BY id DESC${limitString}`,
       (error, result) => {
         if (error) {
           throw error;
@@ -53,10 +52,7 @@ const router = (app) => {
       const gatewayResponse = await fetch(process.env.GATEWAY_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: {
-          api_key: `${process.env.GATEWAY_API_KEY}`,
-          ...request.body,
-        },
+        body: JSON.stringify(request.body),
       });
 
       const channelId = await gatewayResponse.text();
@@ -68,13 +64,14 @@ const router = (app) => {
 
       pool.query("INSERT INTO messages SET ?", data, (error, result) => {
         if (error) {
-          console.log("error", error);
+          console.log("query error", error);
         }
 
         response.status(201).send(`User added with ID: ${result.insertId}`);
       });
     } catch (error) {
       console.log("error", error);
+      response.status(500).send("Something went wrong!");
     }
   });
 };
