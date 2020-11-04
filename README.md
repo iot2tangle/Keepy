@@ -109,6 +109,6 @@ Returns the last 20 messages stored in the database, sorted by descending order.
 Returns the last message stored in the database, sorted by descending order.
 
 ## Tweak it!
-Keepy has been code in an as easy as possible fashion to perform a very specific task. We were going to code it in Rust, but instead went with Nodejs to allow users to easily adapt it to their needs. 
+Keepy has been coded in an as easy as possible fashion to perform a very specific task. We were going to code it in Rust, but instead went with Nodejs to allow users to easily adapt it to their needs. 
 
 Have fun!
