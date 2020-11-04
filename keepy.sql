@@ -8,7 +8,3 @@ CREATE TABLE `messages` (
   `channelId` varchar(300) NOT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8mb4;
-
-/* Workaround for mysql nodejs connector */
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'test';
-FLUSH PRIVILEGES;

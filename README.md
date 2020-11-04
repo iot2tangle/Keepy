@@ -29,15 +29,16 @@ Head to the Keepy directory and create the DB
 mysql -u root -p < keepy.sql
 ```
 
-Config the Database information
+From the Keepy directory, config the database information (by default it uses root)
 
 ```
 nano database-config.js
 ```
 
-Run Keepy with ENV variables
+From the Keepy directory, run npm install and then run Keepy with ENV variables
 
 ```
+npm install # installs the dependencies from npm
 GATEWAY_URL=http://95.216.203.91:8080/sensor_data node index.js
 
 ```

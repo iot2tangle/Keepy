@@ -2,7 +2,7 @@ const mysql = require("mysql");
 
 const config = {
   host: "localhost",
-  user: "test",
+  user: "root",
   password: "test",
   database: "keepy",
 };
