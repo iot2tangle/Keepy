@@ -1,5 +1,7 @@
 # Keepy
 
+![Keepy!](https://iot2tangle.io/assets/screenshots/keepy_header.jpg)
+
 Keepy is a small Nodejs application that sits in front of the Streams Gateway to receive sensors' data and return it on demand. It basically mounts an endpoint you can POST data to. The data is stored on Streams and a local Database that keeps an association between each data set and the Streams channel id containing it. You can query Keepy for a certain number of datasets (i.e. the last one) on a given channel and get an immediate response from the local database, including the datasets requested and their channel ids. This way you get fast read times and the ability to validate the data  integrity against the Tangle.
 
 You can run Keepy on your local computer, a Raspberry or a VPS. 
