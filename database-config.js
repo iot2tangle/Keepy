@@ -4,7 +4,7 @@ const config = {
   host: "localhost",
   user: "test",
   password: "test",
-  database: "gateway",
+  database: "keepy",
 };
 
 const pool = mysql.createPool(config);
