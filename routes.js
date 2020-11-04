@@ -67,7 +67,7 @@ const router = (app) => {
           console.log("query error", error);
         }
 
-        response.status(201).send(`User added with ID: ${result.insertId}`);
+        response.status(201).send(`Message added with ID: ${result.insertId}`);
       });
     } catch (error) {
       console.log("error", error);
