@@ -94,8 +94,6 @@ curl --location --request POST 'KEEPY_IP:3002/messages'
 }'  
 `  
 
-Using "content-type": "application/json".
-
 If the data is valid (validation is performed in the Streams HTTP Gateway, the validation messages are re-routed), the resulting data will be inserted into the database.
 
 ### GET `/messages`
@@ -109,3 +107,8 @@ Returns the last 20 messages stored in the database, sorted by descending order.
 ### GET `/messages/last`
 
 Returns the last message stored in the database, sorted by descending order.
+
+## Tweak it!
+Keepy has been code in an as easy as possible fashion to perform a very specific task. We were going to code it in Rust, but instead went with Nodejs to allow users to easily adapt it to their needs. 
+
+Have fun!
