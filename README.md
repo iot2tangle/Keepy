@@ -35,7 +35,7 @@ Get the Keepy repository from the I2T Hub
 git clone https://github.com/iot2tangle/Keepy.git
 ```
 
-Head to the Keepy directory and edit the database-config.js file to setup your mysql user and password.
+Head to the Keepy directory and edit the ***database-config.js*** file to setup your mysql user and password.
 By default the user is **keepy** but you can change that. 
 
 ```
@@ -44,14 +44,14 @@ GRANT ALL PRIVILEGES ON * . * TO 'keepy'@'localhost';
 ALTER USER 'keepy'@localhost IDENTIFIED WITH mysql_native_password BY 'your_password';
 ```
 
-Once all the changes are done on SQL schema run this command to import the database and tables that Keepy use (it will ask for the mysql root password you set during the mysql_secure_installation configuration)
+Once all the mysql related changes are done, run this command to import the database and tables needed by Keepy (it will ask for the mysql root password you set during the ***mysql_secure_installation*** configuration)
 
 
 ```
 mysql -u root -p < keepy.sql
 ```
 
-Edit the database-config.js to provide the correct database name (by default, "keepy"), mysql user and password.
+Edit the ***database-config.js*** to provide the correct database name (by default, "keepy"), mysql user and password.
 
 ```
 nano database-config.js
@@ -67,7 +67,7 @@ GATEWAY_URL=http://95.216.203.91:8080/sensor_data node index.js
 
 ## Endpoints
 
-Bu default, Keepy runs on the port 3002. You can change that on the **index.js** file. 
+Bu default, Keepy runs on the port 3002. You can change that on the ***index.js*** file. 
 
 ### POST `/messages`
 
