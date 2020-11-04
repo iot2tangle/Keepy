@@ -35,7 +35,17 @@ Get the Keepy repository from the I2T Hub
 git clone https://github.com/iot2tangle/Keepy.git
 ```
 
-Head to the Keepy directory and run this command to import the database and tables that Keepy use.
+Head to the Keepy directory and edit the database-config.js file to setup your mysql user and password.
+By default the user is **keepy** but you can change that. 
+
+```
+CREATE USER 'keepy'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON * . * TO 'keepy'@'localhost';
+ALTER USER 'keepy'@localhost IDENTIFIED WITH mysql_native_password BY 'your_password';
+```
+
+Once all the changes are done on SQL schema run this command to import the database and tables that Keepy use (it will ask for the mysql root password you set during the mysql_secure_installation configuration)
+
 
 ```
 mysql -u root -p < keepy.sql
