@@ -9,3 +9,7 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8mb4;
 
+CREATE USER 'keepy'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON * . * TO 'keepy'@'localhost';
+ALTER USER 'keepy'@localhost IDENTIFIED WITH mysql_native_password BY 'your_password';
+FLUSH PRIVILEGES;
