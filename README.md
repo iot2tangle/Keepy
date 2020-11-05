@@ -106,7 +106,7 @@ By default, Keepy runs on the port 3002. You can change that on the ***keepy.js*
 
 Before pointing your sensors to Keepy, you can test it with Postman or using the following payload.
 
-`curl --location --request POST 'KEEPY_IP:3002/messages' --header 'Content-Type: application/json' --data-raw '{ "iot2tangle": [ { "sensor": "Gyroscope", "data": [ { "x": "4514" }, { "y": "244" }, { "z": "-1830" } ] }, { "sensor": "Acoustic", "data": [ { "mp": "1" } ] } ], "device": "DEVICE_ID_1", "timestamp": 1558511111 }'`
+`curl --location --request POST 'YOUR_KEEPY_HOST:3002/messages' --header 'Content-Type: application/json' --data-raw '{ "iot2tangle": [ { "sensor": "Gyroscope", "data": [ { "x": "4514" }, { "y": "244" }, { "z": "-1830" } ] }, { "sensor": "Acoustic", "data": [ { "mp": "1" } ] } ], "device": "DEVICE_ID_1", "timestamp": 1558511111 }'`
 
 [Note: When using Postman, send the data in the Body using the raw tab, and don't forget to specify the body as JSON(application/json)]
 
