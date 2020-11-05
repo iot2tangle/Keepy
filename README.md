@@ -55,7 +55,7 @@ ALTER USER 'keepy'@localhost IDENTIFIED WITH mysql_native_password BY 'your_pass
 Once all the mysql related changes are done, run this command to import the database and tables needed by Keepy (it will ask for the mysql root password you set during the **_mysql_secure_installation_** configuration)
 
 ```
-mysql -u root -p < keepy.sql
+sudo mysql -u root -p < keepy.sql
 ```
 
 Edit the **_database-config.js_** to provide the correct database name (by default, "keepy"), mysql user and password.
