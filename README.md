@@ -22,12 +22,14 @@ sudo apt install git nodejs npm mysql-server
 ```
 
 Next, we will secure our Mysql Server. Here you will be able to define your user password, which will be needed later.
+You should answer "Yes" to most of the questions the script will do in order to get a secure/clean Mysql Server.
 
 ```
 sudo mysql_secure_installation
 ```
 
 By default, Keepy runs on the port 3002. We found that some Raspberries do not have that port available, so if you are going to be using the default port you may want to be sure it is open. Install **ufw**, enable it and allow traffic on the port 3002.
+If you are installing Keepy on a VPS, this step is not needed.
 
 ```
 sudo apt-get install ufw
