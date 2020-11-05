@@ -43,7 +43,7 @@ Get the Keepy repository from the I2T Hub
 git clone https://github.com/iot2tangle/Keepy.git
 ```
 
-Head to the Keepy directory and edit the **_keepy.js_** file to setup your mysql user and password.
+Head to the Keepy directory and edit the **_keepy.sql_** file to setup your mysql user and password.
 By default the user is **keepy** but you can change that.
 
 ```
