@@ -67,25 +67,25 @@ nano database-config.js
 Run npm install to get all the needed Nodejs modules.
 
 ```
-npm install # installs the dependencies from npm
+npm install 
+```
+
+Edit the .env.example file and set your Streams Gateway URL, port and endpoint. 
+```
+# Rename this file to .env
+GATEWAY_URL=http://YOUR_GW_IP:8080/sensor_data
 ```
 
 Then rename `.env.example` to `.env` to launch Keepy with the necessary ENV variables.
 
 ```
-# Rename this file to .env
-GATEWAY_URL=http://95.216.203.91:8080/sensor_data
+mv .env.example .env
 ```
 
 Finally, run Keepy!
 
 ```
 node keepy.js
-
-# or using nodemon for hot reload during development
-
-npm run keepy
-
 ```
 
 ## Endpoints
