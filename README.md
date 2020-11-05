@@ -27,7 +27,15 @@ Next, we will secure our Mysql Server. Here you will be able to define your user
 sudo mysql_secure_installation
 ```
 
-## Installation
+By default, Keepy runs on the port 3002. We found that some Raspberries do not have that port available, so if you are going to be using the default port you may want to be sure it is open. Install **ufw**, enable it and allow traffic on the port 3002.
+
+```
+sudo apt-get install ufw
+sudo ufw enable 
+sudo ufw allow 3002
+```
+
+## Keepy Installation
 
 Get the Keepy repository from the I2T Hub
 
