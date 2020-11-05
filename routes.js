@@ -24,8 +24,28 @@ const router = (app) => {
         if (error) {
           throw error;
         }
+        
+        let formattedResults = [];
+        
+        result.forEach(element => {
+          try {
+            const message = JSON.parse(element.message)
 
-        response.send(result);
+            formattedResults.push({
+              id: element.id,
+              channelId: element.channelId,
+              message,
+           })
+         } catch(error) {
+            formattedResults.push({
+              id: element.id,
+              channelId: element.channelId,
+              message: element.message
+            })
+         }
+        });
+
+        response.send(formattedResults);
       }
     );
   });
@@ -38,7 +58,23 @@ const router = (app) => {
           throw error;
         }
 
-        response.send(result);
+        let formattedResult;
+        
+        try {
+           formattedResult = {
+            id: result[0].id,
+            message: JSON.parse(result[0].message),
+            channelId: result[0].channelId
+          }
+        } catch(error) {
+          formattedResult = {
+            id: result[0].id,
+            message: result[0].message,
+            channelId: result[0].channelId
+          }
+        }
+
+        response.send(formattedResult);
       }
     );
   });
@@ -47,7 +83,7 @@ const router = (app) => {
     if (_.isEmpty(request.body)) {
       return response.status(500).send(`Bad request`).end();
     }
-
+    
     try {
       const gatewayResponse = await fetch(process.env.GATEWAY_URL, {
         method: "POST",
