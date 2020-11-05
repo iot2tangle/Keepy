@@ -90,6 +90,14 @@ Finally, run Keepy!
 node keepy.js
 ```
 
+You can now send POST/GET requests with your sensors data formatted with the I2T Standard to Keepy. Check the Endpoints section coming next to learn more about it. 
+
+```
+http://YOUR_KEEPY_HOST:3002/messages
+```
+
+
+
 ## Endpoints
 
 By default, Keepy runs on the port 3002. You can change that on the ***keepy.js*** file.
