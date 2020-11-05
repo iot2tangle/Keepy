@@ -17,14 +17,14 @@ git clone --branch return_channel_id https://github.com/iot2tangle/Streams-http-
 Assuming you are on a fresh VPS you will need to install Git, Nodejs, NPM and Mysql. Feel free to skip those you know are already installed on your system.
 
 ```
-apt update
-apt install git nodejs npm mysql-server
+sudo apt update
+sudo apt install git nodejs npm mysql-server
 ```
 
 Next, we will secure our Mysql Server. Here you will be able to define your user password, which will be needed later.
 
 ```
-mysql_secure_installation
+sudo mysql_secure_installation
 ```
 
 ## Installation
