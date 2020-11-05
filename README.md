@@ -90,7 +90,7 @@ node keepy.js
 
 ## Endpoints
 
-Bu default, Keepy runs on the port 3002. You can change that on the ***keepy.js*** file.
+By default, Keepy runs on the port 3002. You can change that on the ***keepy.js*** file.
 
 ### POST `/messages`
 
