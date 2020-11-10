@@ -139,9 +139,10 @@ const router = (app) => {
             if (error) {
               return response.status(500).send('Error performing SELECT')
             }
-            
+
+            const formattedResults = result.map((item) => JSON.parse(item.message))
             const bundle = {
-              "bundle": result
+              "bundle": formattedResults
             }
 
             try {
@@ -150,6 +151,10 @@ const router = (app) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(bundle),
               });
+
+              if (gatewayResponse.status === 400) {
+                return response.status(500).send(`Error: Gateway response: ${gatewayResponse.statusText}`)
+              }
 
               if (gatewayResponse.status === 404) {
                 return response.status(500).send(`Error: Gateway response: ${gatewayResponse.statusText}`)
