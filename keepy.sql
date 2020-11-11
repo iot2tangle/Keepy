@@ -5,7 +5,7 @@ USE keepy;
 CREATE TABLE `messages` (
   `id` int(11) AUTO_INCREMENT NOT NULL,    
   `message` text NOT NULL,
-  `channelId` varchar(300) NOT NULL,
+  `channelId` varchar(300),
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8mb4;
 

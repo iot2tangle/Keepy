@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 const _ = require("lodash");
 
 const router = (app) => {
-  app.get("/", (request, response) => {
+  app.get("/", (_request, response) => {
     response.send({
       message: "Hello",
     });
@@ -50,7 +50,7 @@ const router = (app) => {
     );
   });
 
-  app.get("/messages/last", (request, response) => {
+  app.get("/messages/last", (_request, response) => {
     pool.query(
       "SELECT * FROM messages ORDER BY id DESC LIMIT 1;",
       (error, result) => {
@@ -83,34 +83,105 @@ const router = (app) => {
     if (_.isEmpty(request.body)) {
       return response.status(500).send(`Bad request`).end();
     }
-    
-    try {
-      const gatewayResponse = await fetch(process.env.GATEWAY_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(request.body),
-      });
 
-      const channelId = await gatewayResponse.text();
+    if (process.env.BUFFER_ENABLED === 'FALSE') {
+      try {
+        const gatewayResponse = await fetch(process.env.GATEWAY_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(request.body),
+        });
 
-      const data = {
-        message: JSON.stringify(request.body),
-        channelId,
-      };
+        const channelId = await gatewayResponse.text();
 
-      pool.query("INSERT INTO messages SET ?", data, (error, result) => {
+        const data = {
+          message: JSON.stringify(request.body),
+          channelId
+        };
+
+        pool.query("INSERT INTO messages SET ?", data, (error, result) => {
+          if (error) {
+            return response.status(500).send('Error performing INSERT')
+          }
+
+          return response.status(201).send(`Message added with ID: ${result.insertId}`).end();
+        });
+      } catch (error) {
+        return response.status(500).send("Something went wrong!");
+      }
+
+      return
+    }
+
+    const data = {
+      message: JSON.stringify(request.body),
+    };
+
+    pool.query("INSERT INTO messages SET ?", data, (error, insertResult) => {
+      if (error) {
+        return response.status(500).send('Error performing INSERT')
+      }
+
+      pool.query("SELECT COUNT(*) AS channelIdCount FROM messages WHERE channelId IS NULL", (error, result) => {
         if (error) {
-          console.log("query error", error);
+          return response.status(500).send('Error performing COUNT')
         }
 
-        response.status(201).send(`Message added with ID: ${result.insertId}`);
+        const countChannelId = result[0]['channelIdCount']
+  
+        if (countChannelId < process.env.BUFFER_SIZE) {
+          return response.status(201).send(`Message added with ID: ${insertResult.insertId}`);
+        }
+        
+        pool.query(
+          `SELECT * FROM messages WHERE channelId IS NULL LIMIT ${process.env.BUFFER_SIZE}`,
+          async (error, result) => {
+            if (error) {
+              return response.status(500).send('Error performing SELECT')
+            }
+
+            const formattedResults = result.map((item) => JSON.parse(item.message))
+            const bundle = {
+              "bundle": formattedResults
+            }
+
+            try {
+              const gatewayResponse = await fetch(process.env.GATEWAY_BUNDLE_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(bundle),
+              });
+
+              if (gatewayResponse.status === 400) {
+                return response.status(500).send(`Error: Gateway response: ${gatewayResponse.statusText}`)
+              }
+
+              if (gatewayResponse.status === 404) {
+                return response.status(500).send(`Error: Gateway response: ${gatewayResponse.statusText}`)
+              }
+    
+              const channelId = await gatewayResponse.text();
+    
+              if (channelId) {
+                result.forEach((item) => {
+                  pool.query(`UPDATE messages SET channelId = '${channelId}' WHERE ID = ${item.id}`, (error, result) => {
+                    if (error) {
+                      return response.status(500).send('Error performing UPDATE')
+                    }
+            
+                  });
+                });
+                
+                response.status(201).send(`All messages added with Channel ID: ${channelId}`);
+              }
+            } catch(error) {
+              response.status(500).send('Error while using Gateway');
+            }
+          }
+        );
       });
-    } catch (error) {
-      console.log("error", error);
-      response.status(500).send("Something went wrong!");
-    }
+    });
   });
 };
 
-// Export the router
 module.exports = router;
