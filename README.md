@@ -72,7 +72,7 @@ Run npm install to get all the needed Nodejs modules.
 npm install 
 ```
 
-Edit the .env.example file and set your Streams Gateway URL, port and endpoint. 
+Edit the .env.example file and set your [Streams Gateway URL](https://github.com/iot2tangle/Streams-http-gateway), port and endpoint. 
 ```
 # Rename this file to .env
 GATEWAY_URL=http://YOUR_GW_IP:8080/sensor_data
