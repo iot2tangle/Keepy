@@ -11,5 +11,5 @@ CREATE TABLE `messages` (
 
 CREATE USER 'keepy'@'localhost' IDENTIFIED BY 'your_password';
 GRANT ALL PRIVILEGES ON * . * TO 'keepy'@'localhost';
-ALTER USER 'keepy'@localhost IDENTIFIED WITH mysql_native_password BY 'your_password';
+ALTER USER 'keepy'@localhost IDENTIFIED BY 'your_password';
 FLUSH PRIVILEGES;
