@@ -6,12 +6,6 @@ Keepy is a small Nodejs application that sits in front of the Streams Gateway to
 
 You can run Keepy on your local computer, a Raspberry or a VPS.
 
-**Important:** Keepy will only work with the [Streams HTTP Gateway on the return_channel_id branch](https://github.com/iot2tangle/Streams-http-gateway/tree/return_channel_id). While installing the Gateway, be sure to clone that branch:
-
-```
-git clone --branch return_channel_id https://github.com/iot2tangle/Streams-http-gateway.git
-```
-
 ## Preparing the system
 
 Assuming you are on a fresh VPS you will need to install Git, Nodejs, NPM and Mysql. Feel free to skip those you know are already installed on your system.
